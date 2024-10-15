@@ -1,19 +1,22 @@
-const mongoose = require("mongoose");
-const express = require("express");
-const PORT = process.env.port || 5000;
-require("dotenv").config();
+import mongoose from "mongoose";
+import express from "express";
+import authRouter from "./authRouter.js";
+const PORT = 8080 || process.env.MONGODB_URI;
+import "dotenv/config";
 
 const app = express();
 
-const start = async () => {
+app.use(express.json());
+app.use("/auth", authRouter);
+
+const connectDB = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://riabtsundv:3m6sEVeLZN2ojcr0@cluster0.chmox.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-    );
-    console.log(`Started on port: ${PORT}`);
+    await mongoose.connect(process.env.MONGODB_URI);
+    app.listen(PORT, () => {
+      console.log(`Server started on port: ${PORT}`);
+    });
   } catch (err) {
-    console.log(err);
+    console.log("Помилка підключення до MongoDB", err);
   }
 };
-
-start();
+export default connectDB;
