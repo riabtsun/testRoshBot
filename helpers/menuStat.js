@@ -1,4 +1,4 @@
-import MenuStats from "../../models/MenuStats.js";
+const MenuStat = require("../models/MenuStat.js");
 
 async function incrementMenuStat(menuItem) {
   try {
@@ -18,4 +18,4 @@ async function incrementMenuStat(menuItem) {
   }
 }
 
-export default incrementMenuStat;
+module.exports = incrementMenuStat;

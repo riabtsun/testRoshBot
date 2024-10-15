@@ -1,3 +1,3 @@
-export default {
+module.exports = {
   secret: "SECRET_KEY_RANDOM",
 };

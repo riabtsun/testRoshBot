@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
-import express from "express";
-import authRouter from "./authRouter.js";
+const mongoose = require("mongoose");
+const express = require("express");
+const authRouter = require("./authRouter.js");
 const PORT = 8080 || process.env.MONGODB_URI;
-import "dotenv/config";
+require("dotenv/config");
 
 const app = express();
 
@@ -19,4 +19,5 @@ const connectDB = async () => {
     console.log("Помилка підключення до MongoDB", err);
   }
 };
-export default connectDB;
+
+module.exports = connectDB;

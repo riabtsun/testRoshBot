@@ -1,5 +1,5 @@
-import { Keyboard, InlineKeyboard } from "grammy";
-import { Menu } from "@grammyjs/menu";
+const { Keyboard, InlineKeyboard } = require("grammy");
+// import { Menu } from "@grammyjs/menu";
 // Основне меню
 
 const mainMenu = new InlineKeyboard()
@@ -10,7 +10,7 @@ const mainMenu = new InlineKeyboard()
     "hcpInteractionMenu"
   )
   .row()
-  .text("3.Я хочу створити захід", "hcpInteractionMenu")
+  .text("3.Я хочу створити захід", "mainmenu3")
   .row()
   .text("4.Я хочу надати підтримку на запит", "mainMenu4")
   .row()
@@ -87,4 +87,4 @@ const menus = {
   hcpInteractionMenu,
   hcpInteractionWithoutPoz,
 };
-export default menus;
+module.exports = menus;

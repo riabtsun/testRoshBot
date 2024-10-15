@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } = require("mongoose");
 
 const Worker = new Schema({
   username: { type: String },
@@ -9,4 +9,4 @@ const Worker = new Schema({
   roles: [{ type: String, ref: "Role" }],
 });
 
-export default model("Worker", Worker);
+module.exports = model("Worker", Worker);
