@@ -1,6 +1,6 @@
 const { Composer } = require("grammy");
 const Worker = require("../models/Worker");
-const menus = require("../keyboards");
+const mainMenu = require("../keyboards/mainMenu");
 
 const checkContact = new Composer();
 
@@ -21,7 +21,7 @@ checkContact.on("message:contact", async (ctx) => {
         await worker.save();
       }
       await ctx.reply("Доступ предоставлен! Добро пожаловать в главное меню.", {
-        reply_markup: menus.mainMenu,
+        reply_markup: mainMenu,
       });
     } else {
       await ctx.reply("Извините, у вас нет доступа к этому боту.");

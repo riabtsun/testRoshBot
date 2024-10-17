@@ -7,7 +7,7 @@ async function incrementMenuStat(menuItem) {
     if (stat) {
       stat.count += 1;
       await stat.save();
-      console.log(`Статистика для ${menuItem} оновлена: ${stat.count}`);
+      // console.log(`Статистика для ${menuItem} оновлена: ${stat.count}`);
     } else {
       stat = new MenuStat({ menuItem, count: 1 });
       await stat.save();
