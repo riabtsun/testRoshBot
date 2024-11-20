@@ -11,7 +11,7 @@ checkContact.on("message:contact", async (ctx) => {
   try {
     let worker = await Worker.findOne({ phoneNumber });
     if (worker) {
-      worker.username = ctx.from.username;
+      worker.username = ctx.from.username || `user_${Date.now()}`;
       worker.first_name = ctx.from.first_name;
 
       await worker.save();
@@ -29,7 +29,7 @@ checkContact.on("message:contact", async (ctx) => {
   } catch (error) {
     console.error("Ошибка при аутентификации пользователя:", error);
     await ctx.reply(
-      "Произошла ошибка при обработке вашего запроса. Попробуйте позже."
+      "Произошла ошибка при обработке вашего запроса. Попробуйте позже.",
     );
   }
 });

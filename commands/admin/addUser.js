@@ -15,7 +15,7 @@ addUser.command("adduser", async (ctx) => {
   if (!phoneNumber) {
     console.log(`Команда adduser вызвана без номера телефона.`);
     return ctx.reply(
-      "Пожалуйста, укажите номер телефона. Пример: /adduser +1234567890"
+      "Пожалуйста, укажите номер телефона. Пример: /adduser +1234567890",
     );
   }
 
@@ -28,11 +28,12 @@ addUser.command("adduser", async (ctx) => {
 
     user = new Worker({
       phoneNumber,
+      username: `user_${Date.now()}`,
     });
     await user.save();
 
     return ctx.reply(
-      `Пользователь с номером телефона ${phoneNumber} успешно добавлен.`
+      `Пользователь с номером телефона ${phoneNumber} успешно добавлен.`,
     );
   } catch (error) {
     console.error("Ошибка при добавлении пользователя:", error);

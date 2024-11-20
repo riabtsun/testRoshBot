@@ -57,7 +57,7 @@ const requestContactKeyboard = new Keyboard()
 bot.command("start", async (ctx) => {
   await ctx.reply(
     "Добро пожаловать! Пожалуйста, отправьте свой номер телефона для доступа к боту.",
-    { reply_markup: requestContactKeyboard }
+    { reply_markup: requestContactKeyboard },
   );
 });
 
@@ -88,16 +88,16 @@ bot.on("callback_query:data", async (ctx) => {
         "Документи з професійної етики",
         {
           reply_markup: ethicsMenu,
-        }
+        },
       );
       break;
     //2 ethic menu
     case "hcpInteractionMenu":
       await ctx.answerCallbackQuery(
-        "Я хочу взаємодіяти з професіоналами охорони здоров’я (ПОЗ)"
+        "Я хочу взаємодіяти з професіоналами охорони здоров’я (ПОЗ)",
       );
       await incrementMenuStat(
-        "Я хочу взаємодіяти з професіоналами охорони здоров’я (ПОЗ)"
+        "Я хочу взаємодіяти з професіоналами охорони здоров’я (ПОЗ)",
       );
       await ctx.callbackQuery.message.editText("Як ви хочете взаємодіяти?", {
         reply_markup: hcpInteractionMenu,
@@ -105,13 +105,13 @@ bot.on("callback_query:data", async (ctx) => {
       break;
     case "hcpInteractionWithoutPoz":
       await ctx.answerCallbackQuery(
-        "Хочу залучити ПОЗ до участі у заході без надання послуг"
+        "Хочу залучити ПОЗ до участі у заході без надання послуг",
       );
       await ctx.callbackQuery.message.editText(
         "Хочу залучити ПОЗ до участі у заході без надання послуг",
         {
           reply_markup: hcpInteractionWithoutPoz,
-        }
+        },
       );
       break;
     case "hcpInteractionWithoutPozRequirements":
@@ -166,7 +166,7 @@ bot.on("callback_query:data", async (ctx) => {
         "Рош отримує вигоду в обмін на надання підтримки?",
         {
           reply_markup: shareSupport,
-        }
+        },
       );
       break;
     case "shareSupportReject":
@@ -219,7 +219,7 @@ bot.use(async (ctx, next) => {
         "У вас нет доступа к этому боту. Пожалуйста, отправьте свой номер телефона.",
         {
           reply_markup: requestContactKeyboard,
-        }
+        },
       );
     }
   } catch (error) {
