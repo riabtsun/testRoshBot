@@ -7,10 +7,13 @@ const checkContact = new Composer();
 checkContact.on("message:contact", async (ctx) => {
   const phoneNumber = ctx.message.contact.phone_number;
   const telegramId = ctx.from.id;
+  console.log(phoneNumber);
+  console.log(telegramId);
 
   try {
     let worker = await Worker.findOne({ phoneNumber });
     if (worker) {
+      console.log(worker);
       worker.username = ctx.from.username || `user_${Date.now()}`;
       worker.first_name = ctx.from.first_name;
 
