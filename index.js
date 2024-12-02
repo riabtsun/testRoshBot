@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const authRouter = require("./authRouter.js");
-const PORT = 8080 || process.env.MONGODB_URI;
+const PORT = 3030 || process.env.MONGODB_URI;
 require("dotenv/config");
 
 const app = express();
