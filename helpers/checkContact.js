@@ -9,7 +9,6 @@ checkContact.on("message:contact", async (ctx) => {
     ? ctx.message.contact.phone_number.slice(3)
     : ctx.message.contact.phone_number.slice(2);
   const telegramId = ctx.from.id;
-  // console.log("phoneNumber is: " + phoneNumber);
 
   try {
     let worker = await Worker.findOne({ phoneNumber });

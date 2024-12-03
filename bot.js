@@ -74,9 +74,9 @@ bot.command("start", async (ctx) => {
 });
 
 bot.command("menu", async (ctx) => {
-  const phoneNumber = ctx.message.contact.phone_number.startsWith("+")
-    ? ctx.message.contact.phone_number.slice(3)
-    : ctx.message.contact.phone_number.slice(2);
+  const phoneNumber = ctx?.from.phone_number.startsWith("+")
+    ? ctx?.from.phone_number.slice(3)
+    : ctx?.from.phone_number.slice(2);
   console.log(phoneNumber);
   try {
     let worker = await Worker.findOne({ phoneNumber });
