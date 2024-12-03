@@ -5,8 +5,9 @@ const mainMenu = require("../keyboards/mainMenu");
 const checkContact = new Composer();
 
 checkContact.on("message:contact", async (ctx) => {
-  console.log(`phoneNumber before is: ${ctx.message.contact}`);
-  const phoneNumber = `${ctx.message.contact.phone_number}`;
+  const phoneNumber = ctx.message.contact.phone_number.startsWith("+")
+    ? ctx.message.contact.phone_number.slice(3)
+    : ctx.message.contact.phone_number.slice(2);
   const telegramId = ctx.from.id;
   console.log("phoneNumber is: " + phoneNumber);
 
