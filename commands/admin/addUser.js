@@ -6,16 +6,16 @@ const addUser = new Composer();
 addUser.command("adduser", async (ctx) => {
   if (!ctx.isAdmin) {
     console.log(ctx.from);
-    return ctx.reply("У вас нет прав для выполнения этой команды.");
+    return ctx.reply("У вас немає прав для виконання цієї команди.");
   }
 
   const args = ctx.message.text.split(" ").slice(1);
   const phoneNumber = args[0];
 
   if (!phoneNumber) {
-    console.log(`Команда adduser вызвана без номера телефона.`);
+    console.log(`Команда adduser викликана без номера телефону.`);
     return ctx.reply(
-      "Пожалуйста, укажите номер телефона. Пример: /adduser +1234567890",
+      "Будь ласка, вкажіть номер телефону. Приклад: /adduser 0501234567"
     );
   }
 
@@ -23,7 +23,7 @@ addUser.command("adduser", async (ctx) => {
     let user = await Worker.findOne({ phoneNumber });
 
     if (user) {
-      return ctx.reply("Пользователь с таким номером телефона уже существует.");
+      return ctx.reply("Користувач з таким номером телефону вже існує.");
     }
 
     user = new Worker({
@@ -33,11 +33,11 @@ addUser.command("adduser", async (ctx) => {
     await user.save();
 
     return ctx.reply(
-      `Пользователь с номером телефона ${phoneNumber} успешно добавлен.`,
+      `Користувач з номером телефону ${phoneNumber} вдало доданий.`
     );
   } catch (error) {
-    console.error("Ошибка при добавлении пользователя:", error);
-    return ctx.reply("Произошла ошибка при добавлении пользователя.");
+    console.error("Помилка при додаванні користувача:", error);
+    return ctx.reply("Виникла помилка при додаванні користувача.");
   }
 });
 

@@ -12,33 +12,33 @@ removeUser.command("removeuser", async (ctx) => {
   const phoneNumber = args[0];
 
   if (!phoneNumber) {
-    console.log(`Команда removeuser вызвана без номера телефона.`);
+    console.log(`Команда removeuser викликана без номера телефону.`);
     return ctx.reply(
-      "Пожалуйста, укажите номер телефона. Пример: /removeuser +1234567890"
+      "Будь ласка, вкажіть номер телефону. Приклад: /removeuser 0501234567"
     );
   }
 
   // const phoneNumber = phoneNumber.replace(/[\s\-()]/g, "");
 
-  console.log(`Удаление пользователя с номером телефона: ${phoneNumber}`);
+  console.log(`Видалення користувача з номером телефону: ${phoneNumber}`);
 
   try {
     const user = await Worker.deleteOne({ phoneNumber: phoneNumber });
 
     if (user.deletedCount === 0) {
-      console.log(`Пользователь с номером телефона ${phoneNumber} не найден.`);
-      return ctx.reply("Пользователь с таким номером телефона не найден.");
+      console.log(`Користувача з номером телефону ${phoneNumber} не знайдено.`);
+      return ctx.reply("Користувача з таким номером телефону не знайдено.");
     }
 
     console.log(
-      `Пользователь с номером телефона ${phoneNumber} успешно удалён.`
+      `Користувач з номером телефону ${phoneNumber} вдало видалений.`
     );
     return ctx.reply(
-      `Пользователь с номером телефона ${phoneNumber} успешно удалён.`
+      `Користувач з номером телефону ${phoneNumber} вдало видалений.`
     );
   } catch (error) {
-    console.error("Ошибка при удалении пользователя:", error);
-    return ctx.reply("Произошла ошибка при удалении пользователя.");
+    console.error("Помилка при видаленні користувача:", error);
+    return ctx.reply("Виникла помилка при видаленні користувача.");
   }
 });
 
