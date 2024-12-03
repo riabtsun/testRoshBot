@@ -5,13 +5,11 @@ const mainMenu = require("../keyboards/mainMenu");
 const checkContact = new Composer();
 
 checkContact.on("message:contact", async (ctx) => {
-  const phoneNumber = `${
-    ctx.message.contact.phone_number.startsWith("+")
-      ? ctx.message.contact.phone_number.slice(3)
-      : ctx.message.contact.phone_number.slice(2)
-  }`;
+  const phoneNumber = ctx.message.contact.phone_number.startsWith("+")
+    ? ctx.message.contact.phone_number.slice(3)
+    : ctx.message.contact.phone_number.slice(2);
   const telegramId = ctx.from.id;
-  console.log("phoneNumber is: " + phoneNumber);
+  // console.log("phoneNumber is: " + phoneNumber);
 
   try {
     let worker = await Worker.findOne({ phoneNumber });

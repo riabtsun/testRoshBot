@@ -63,8 +63,8 @@ connectDB();
 
 const requestContactKeyboard = new Keyboard()
   .requestContact("Відправити номер телефону")
-  .oneTime()
-  .resized();
+  .resized()
+  .oneTime();
 
 bot.command("start", async (ctx) => {
   await ctx.reply(
@@ -72,8 +72,24 @@ bot.command("start", async (ctx) => {
     { reply_markup: requestContactKeyboard }
   );
 });
+
 bot.command("menu", async (ctx) => {
-  await ctx.reply("Вітаємо в головному меню.", { reply_markup: mainMenu });
+  const phoneNumber = ctx.message.contact.phone_number.startsWith("+")
+    ? ctx.message.contact.phone_number.slice(3)
+    : ctx.message.contact.phone_number.slice(2);
+  try {
+    let worker = await Worker.findOne({ phoneNumber });
+    if (worker) {
+      await ctx.reply("Вітаємо в головному меню.", { reply_markup: mainMenu });
+    } else {
+      await ctx.reply("Вибачте, у вас немає доступу до цього бота.");
+    }
+  } catch (error) {
+    console.error("Помилка при аутентифікації користувача:", error);
+    await ctx.reply(
+      "Виникла помилка при обробці вашого запиту. Спробуйте пізніше."
+    );
+  }
 });
 
 bot.callbackQuery("backToMainMenu", async (ctx) => {
