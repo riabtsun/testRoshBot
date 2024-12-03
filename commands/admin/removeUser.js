@@ -5,7 +5,7 @@ const removeUser = new Composer();
 
 removeUser.command("removeuser", async (ctx) => {
   if (!ctx.isAdmin) {
-    return ctx.reply("У вас нет прав для выполнения этой команды.");
+    return ctx.reply("У вас немає прав для виконання цієї команди.");
   }
 
   const args = ctx.message.text.split(" ").slice(1);

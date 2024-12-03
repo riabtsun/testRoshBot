@@ -4,7 +4,7 @@ const MenuStat = require("../../models/MenuStat");
 const showVisits = new Composer();
 showVisits.command("visits", async (ctx) => {
   if (!ctx.isAdmin) {
-    return ctx.reply("У вас нет прав для выполнения этой команды.");
+    return ctx.reply("У вас немає прав для виконання цієї команди.");
   }
 
   try {
@@ -16,7 +16,6 @@ showVisits.command("visits", async (ctx) => {
     stats.forEach((stat) => {
       message += `• ${stat.menuItem}: <b>${stat.count}</b> відвідувань\n`;
     });
-
     return ctx.reply(message, { parse_mode: "HTML" });
   } catch (err) {
     console.log(err);

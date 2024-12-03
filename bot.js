@@ -74,12 +74,11 @@ bot.command("start", async (ctx) => {
 });
 
 bot.command("menu", async (ctx) => {
-  const phoneNumber = ctx?.from.phone_number.startsWith("+")
-    ? ctx?.from.phone_number.slice(3)
-    : ctx?.from.phone_number.slice(2);
-  console.log(phoneNumber);
+  console.log(ctx.from);
+  const telegramId = ctx.from.id;
+
   try {
-    let worker = await Worker.findOne({ phoneNumber });
+    let worker = await Worker.findOne({ telegramId });
     if (worker) {
       await ctx.reply("Вітаємо в головному меню.", { reply_markup: mainMenu });
     } else {
