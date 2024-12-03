@@ -17,7 +17,7 @@ const hcpInteractionWithPoz = new InlineKeyboard()
   .row()
   .text(
     "3.Збирання доказів правомірного і етичного залучення",
-    "hcpInteractionWithPoz"
+    "hcpInteractionWithPozEvidence"
   )
   .row()
   .text("< В головне меню", "backToMainMenu");
@@ -32,7 +32,7 @@ const hcpInteractionWithoutPoz = new InlineKeyboard()
   .row()
   .text(
     "3.Збирання доказів правомірного і етичного залучення",
-    "hcpInteractionWithoutPozEvidence "
+    "hcpInteractionWithoutPozEvidence"
   )
   .row()
   .text("< В головне меню", "backToMainMenu");

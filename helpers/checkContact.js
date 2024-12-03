@@ -23,16 +23,16 @@ checkContact.on("message:contact", async (ctx) => {
         worker.telegramId = telegramId;
         await worker.save();
       }
-      await ctx.reply("Доступ предоставлен! Добро пожаловать в главное меню.", {
+      await ctx.reply("Доступ надано! Вітаємо в головному меню.", {
         reply_markup: mainMenu,
       });
     } else {
-      await ctx.reply("Извините, у вас нет доступа к этому боту.");
+      await ctx.reply("Вибачте, у вас немає доступу до цього бота.");
     }
   } catch (error) {
-    console.error("Ошибка при аутентификации пользователя:", error);
+    console.error("Помилка при аутентифікації користувача:", error);
     await ctx.reply(
-      "Произошла ошибка при обработке вашего запроса. Попробуйте позже.",
+      "Виникла помилка при обробці вашого запиту. Спробуйте пізніше."
     );
   }
 });

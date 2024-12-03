@@ -1,12 +1,12 @@
 const { InlineKeyboard } = require("grammy");
 
 const antiCorruption = new InlineKeyboard()
-  .text("a.Заборона корупції та неправомірної вимоги", "antiCorruptionBan")
+  .text("Заборона корупції та неправомірної вимоги", "antiCorruptionBan")
   .row()
-  .text("b.Конфлікт інтересів ", "antiCorruptionConflict")
+  .text("Конфлікт інтересів", "antiCorruptionConflict")
   .row()
   .text(
-    "c.Повідомити про корупцію або конфлікт інтересів",
+    "Повідомити про корупцію або конфлікт інтересів",
     "antiCorruptionInform"
   )
   .row()

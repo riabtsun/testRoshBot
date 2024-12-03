@@ -15,11 +15,11 @@ const mainMenu = new InlineKeyboard()
   .text("4.Я хочу надати підтримку на запит", "shareSupport")
   .row()
   .text(
-    "5.Я хочу створити рішення для підтримки пацієнтів (текст)",
-    "mainMenu5"
+    "5.Я хочу створити рішення для підтримки пацієнтів",
+    "createPatientsSupport"
   )
   .row()
-  .text("6.Я хочу створити партнерство (текст)", "mainMenu6")
+  .text("6.Я хочу створити партнерство", "createPartnership")
   .row()
   .text("7.Шаблони документів", "docsTemplates")
   .row()

@@ -18,7 +18,7 @@ const createEventConfirm = new InlineKeyboard()
 
 const createEventConfirmBusiness = new InlineKeyboard()
   .text(
-    "1.Експертна рада (Advisory Board)",
+    "1.Консультативна рада (Advisory Board)",
     "createEventConfirmBusinessAdvisory"
   )
   .row()
@@ -40,7 +40,7 @@ const createEventConfirmBusiness = new InlineKeyboard()
 
 const createEventConfirmSciences = new InlineKeyboard()
   .text(
-    "1.Експертна рада (Advisory Board)",
+    "1.Консультативна  рада (Advisory Board)",
     "createEventConfirmSciencesAdvisory"
   )
   .row()
@@ -65,7 +65,10 @@ const createEventConfirmSciences = new InlineKeyboard()
   .text("< В головне меню", "backToMainMenu");
 
 const createEventConfirmPolicy = new InlineKeyboard()
-  .text("1.Експертна рада (Advisory Board)", "createEventConfirmPolicyAdvisory")
+  .text(
+    "1.Консультативна рада (Advisory Board)",
+    "createEventConfirmPolicyAdvisory"
+  )
   .row()
   .text("2.Захід з залученням спікера", "createEventConfirmPolicySpeaker")
   .row()

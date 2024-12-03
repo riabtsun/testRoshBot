@@ -1,5 +1,5 @@
 const Router = require("express");
-const controller = require("./authController.js");
+const controller = require("./Controllers/authController.js");
 const { check } = require("express-validator");
 const router = new Router();
 
