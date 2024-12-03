@@ -7,7 +7,7 @@ const checkContact = new Composer();
 checkContact.on("message:contact", async (ctx) => {
   const phoneNumber = `${ctx.message.contact.phone_number}`;
   const telegramId = ctx.from.id;
-  console.log(phoneNumber);
+  console.log("phoneNumber is: " + phoneNumber);
   console.log(telegramId);
 
   try {
