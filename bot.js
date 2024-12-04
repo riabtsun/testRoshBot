@@ -163,7 +163,9 @@ bot.on("callback_query:data", async (ctx) => {
         await ctx.answerCallbackQuery(
           "Хочу залучити ПОЗ до участі у заході без надання послуг",
         );
-        await ctx.callbackQuery.message.editMessageText(
+        await ctx.api.editMessageText(
+          messageChatId,
+          messageMessageId,
           "Хочу залучити ПОЗ до участі у заході без надання послуг",
           {
             reply_markup: hcpInteractionWithoutPoz,
