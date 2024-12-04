@@ -174,9 +174,14 @@ bot.on("callback_query:data", async (ctx) => {
         break;
       case "hcpInteractionWithoutPozRequirements":
         await ctx.answerCallbackQuery("Вимоги і обмеження");
-        await ctx.callbackQuery.message.editMessageText("Вимоги і обмеження", {
-          reply_markup: hcpInteractionWithoutPozRequirements,
-        });
+        await ctx.api.editMessageText(
+          messageChatId,
+          messageMessageId,
+          "Вимоги і обмеження",
+          {
+            reply_markup: hcpInteractionWithoutPozRequirements,
+          },
+        );
         break;
       case "hcpInteractionWithPoz":
         await ctx.answerCallbackQuery("Хочу залучити ПОЗ до надання послуг");
