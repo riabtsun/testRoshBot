@@ -1,6 +1,6 @@
 require("dotenv/config");
 const { Bot, Keyboard, InlineKeyboard } = require("grammy");
-const { hydrateApi, hydrateContext } = require("@grammyjs/hydrate");
+const { hydrate, hydrateApi, hydrateContext } = require("@grammyjs/hydrate");
 const connectDB = require("./index");
 const Worker = require("./models/Worker");
 const mainMenu = require("./keyboards/mainMenu");
@@ -45,7 +45,7 @@ const showVisits = require("./commands/admin/showVisits");
 const checkContact = require("./helpers/checkContact");
 
 const bot = new Bot(process.env.BOT_API_KEY);
-
+bot.use(hydrate());
 bot.catch((error) => {
   console.error("Виникла помилка в боті:", error);
 });
