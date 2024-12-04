@@ -1,6 +1,6 @@
 require("dotenv/config");
 const { Bot, Keyboard, InlineKeyboard } = require("grammy");
-const { hydrate, hydrateApi, hydrateContext } = require("@grammyjs/hydrate");
+const { hydrateApi, hydrateContext } = require("@grammyjs/hydrate");
 const connectDB = require("./index");
 const Worker = require("./models/Worker");
 const mainMenu = require("./keyboards/mainMenu");
@@ -45,24 +45,28 @@ const showVisits = require("./commands/admin/showVisits");
 const checkContact = require("./helpers/checkContact");
 
 const bot = new Bot(process.env.BOT_API_KEY);
-bot.use(hydrate());
+// bot.use(hydrate());
 bot.catch((error) => {
   console.error("Виникла помилка в боті:", error);
 });
 
-bot.use(hydrateContext());
-bot.api.config.use(hydrateApi());
+// bot.use(hydrateContext());
+// bot.api.config.use(hydrateApi());
 
-bot.api.setMyCommands([
-  {
-    command: "start",
-    description: "запустити бота",
-  },
-  {
-    command: "menu",
-    description: "Головне меню",
-  },
-]);
+bot.api
+  .setMyCommands([
+    {
+      command: "start",
+      description: "запустити бота",
+    },
+    {
+      command: "menu",
+      description: "Головне меню",
+    },
+  ])
+  .catch((error) => {
+    console.error("Ошибка при установке команд:", error);
+  });
 connectDB();
 
 const requestContactKeyboard = new Keyboard()
@@ -118,7 +122,7 @@ bot.on("callback_query:data", async (ctx) => {
       case "ethics-menu":
         await ctx.answerCallbackQuery("Документи з професійної етики");
         await incrementMenuStat("Документи з професійної етики");
-        await ctx.callbackQuery.message.editText(
+        await ctx.callbackQuery.message.editMessageText(
           "Документи з професійної етики",
           {
             reply_markup: ethicsMenu,
@@ -133,15 +137,18 @@ bot.on("callback_query:data", async (ctx) => {
         await incrementMenuStat(
           "Я хочу взаємодіяти з професіоналами охорони здоров’я (ПОЗ)",
         );
-        await ctx.callbackQuery.message.editText("Як ви хочете взаємодіяти?", {
-          reply_markup: hcpInteractionMenu,
-        });
+        await ctx.callbackQuery.message.editMessageText(
+          "Як ви хочете взаємодіяти?",
+          {
+            reply_markup: hcpInteractionMenu,
+          },
+        );
         break;
       case "hcpInteractionWithoutPoz":
         await ctx.answerCallbackQuery(
           "Хочу залучити ПОЗ до участі у заході без надання послуг",
         );
-        await ctx.callbackQuery.message.editText(
+        await ctx.callbackQuery.message.editMessageText(
           "Хочу залучити ПОЗ до участі у заході без надання послуг",
           {
             reply_markup: hcpInteractionWithoutPoz,
@@ -150,13 +157,13 @@ bot.on("callback_query:data", async (ctx) => {
         break;
       case "hcpInteractionWithoutPozRequirements":
         await ctx.answerCallbackQuery("Вимоги і обмеження");
-        await ctx.callbackQuery.message.editText("Вимоги і обмеження", {
+        await ctx.callbackQuery.message.editMessageText("Вимоги і обмеження", {
           reply_markup: hcpInteractionWithoutPozRequirements,
         });
         break;
       case "hcpInteractionWithPoz":
         await ctx.answerCallbackQuery("Хочу залучити ПОЗ до надання послуг");
-        await ctx.editText("Хочу залучити ПОЗ до надання послуг", {
+        await ctx.editMessageText("Хочу залучити ПОЗ до надання послуг", {
           reply_markup: hcpInteractionWithPoz,
         });
         break;
@@ -164,31 +171,31 @@ bot.on("callback_query:data", async (ctx) => {
       case "createEvent":
         await ctx.answerCallbackQuery("Це захід Рош?");
         await incrementMenuStat("Я хочу створити захід");
-        await ctx.editText("Це захід Рош?", {
+        await ctx.editMessageText("Це захід Рош?", {
           reply_markup: createEvent,
         });
         break;
       case "createEventConfirm":
         await ctx.answerCallbackQuery("Яка мета?");
-        await ctx.editText("Яка мета?", {
+        await ctx.editMessageText("Яка мета?", {
           reply_markup: createEventConfirm,
         });
         break;
       case "createEventConfirmBusiness":
         await ctx.answerCallbackQuery("Ділова (комерційна)");
-        await ctx.editText("Який тип заходу?", {
+        await ctx.editMessageText("Який тип заходу?", {
           reply_markup: createEventConfirmBusiness,
         });
         break;
       case "createEventConfirmSciences":
         await ctx.answerCallbackQuery("Наукова");
-        await ctx.editText("Який тип заходу?", {
+        await ctx.editMessageText("Який тип заходу?", {
           reply_markup: createEventConfirmSciences,
         });
         break;
       case "createEventConfirmPolicy":
         await ctx.answerCallbackQuery("Policy shaping");
-        await ctx.editText("Який тип заходу?", {
+        await ctx.editMessageText("Який тип заходу?", {
           reply_markup: createEventConfirmPolicy,
         });
         break;
@@ -196,19 +203,22 @@ bot.on("callback_query:data", async (ctx) => {
       case "shareSupport":
         await ctx.answerCallbackQuery("Policy shaping");
         await incrementMenuStat("Я хочу надати підтримку на запит");
-        await ctx.editText("Рош отримує вигоду в обмін на надання підтримки?", {
-          reply_markup: shareSupport,
-        });
+        await ctx.editMessageText(
+          "Рош отримує вигоду в обмін на надання підтримки?",
+          {
+            reply_markup: shareSupport,
+          },
+        );
         break;
       case "shareSupportReject":
         await ctx.answerCallbackQuery("Це благодійність. Яка мета підтримки?");
-        await ctx.editText("Це благодійність. Яка мета підтримки?", {
+        await ctx.editMessageText("Це благодійність. Яка мета підтримки?", {
           reply_markup: shareSupportReject,
         });
         break;
       case "shareSupportConfirm":
         await ctx.answerCallbackQuery("1.Це спонсорство. Який бюджет? ");
-        await ctx.editText("1.Це спонсорство. Який бюджет? ", {
+        await ctx.editMessageText("1.Це спонсорство. Який бюджет? ", {
           reply_markup: shareSupportConfirm,
         });
         break;
@@ -216,7 +226,7 @@ bot.on("callback_query:data", async (ctx) => {
       case "docsTemplates":
         await ctx.answerCallbackQuery("7.Шаблони документів");
         await incrementMenuStat("Шаблони документів");
-        await ctx.editText("Шаблони документів", {
+        await ctx.editMessageText("Шаблони документів", {
           reply_markup: docsTemplates,
         });
         break;
@@ -224,13 +234,13 @@ bot.on("callback_query:data", async (ctx) => {
       case "antiCorruption":
         await ctx.answerCallbackQuery("Запобігання корупції");
         await incrementMenuStat("Запобігання корупції");
-        await ctx.editText("Запобігання корупції", {
+        await ctx.editMessageText("Запобігання корупції", {
           reply_markup: antiCorruption,
         });
         break;
       //answers in order
       case "hcpInteractionWithoutPozRequirementsGeneral":
-        await ctx.editText(
+        await ctx.editMessageText(
           "Рош Україна уникає надання будь-яких благ ПОЗ  або закладам охорони здоров'я, які можуть бути сприйняті як неправомірні стимули для призначення, рекомендації, закупівлі, замовлення, постачання, використання, продажу, оренди або введення лікарських засобів Roche, і бере до уваги можливе сприйняття таких дій перед тим, як їх здійснити.\n" +
             "ПОЗ має бути зареєстрований в EpicX. \n" +
             "Якщо Ви залучаєте ПОЗ до участі в заході, Ви маєте визначити критерії на підставі яких Ви обираєте саме цього ПОЗ для залучення. \n",
@@ -238,7 +248,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "hcpInteractionWithoutPozRequirementsPlace":
-        await ctx.editText(
+        await ctx.editMessageText(
           'Усі заходи мають проводитися у відповідному місці, яке є сприятливим для ділових або наукових потреб і мети заходу. Слід уникати використання екстравагантних місць. "Екстравагантними" ресторанами є: заклади, які визначені як "Fine dining" ($$$$) на сайті tripadvisor.com (рекомендовано використовувати для ділових зустрічей/обідів під час заходів заклади харчування рівня Mid-range ($$ - $$$) категорії "Good for Business meetings"). Екстравагантними" готелями та конгрес-центрами є: \n' +
             "•\tрозкішні готелі (більше 4 зірок);\n" +
             "•\tзаміські клуби;\n" +
@@ -248,7 +258,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "hcpInteractionWithoutPozRequirementsFood":
-        await ctx.editText(
+        await ctx.editMessageText(
           "Офіційні обіди, вітальні прийоми тощо мають бути якісними, але не пишними (розкішними). Відкритий бар заборонено. Усі витрати мають бути в межах лімітів витрат, встановлених Етичним кодексом асоціації виробників інноваційних ліків:\n" +
             "•\tМаксимальна вартість однієї трапези: 1440 грн. з ПДВ;\n" +
             "•\tМаксимальна вартість всіх витрат на гостинність на 1 ПОЗ протягом 1 дня: 2400 грн. з ПДВ;\n" +
@@ -257,7 +267,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "hcpInteractionWithoutPozRequirementsDrive":
-        await ctx.editText(
+        await ctx.editMessageText(
           "Літаки: заборонено 1 клас, приватні літаки або чартерні рейси:\n" +
             "Залізничний транспорт: 1 клас дозволяється\n" +
             "Розумні витрати на транспорт під час залучення можуть бути відшкодовані.\n" +
@@ -266,25 +276,25 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "hcpInteractionWithoutPozInstruction":
-        await ctx.editText(
+        await ctx.editMessageText(
           "Залучення реєструється в RoME під час створення заходу (create – Event) або як окреме залучення (create – Standalone Contract/Standalone Engagement)",
           { reply_markup: backToMainMenu },
         );
         break;
       case "hcpInteractionWithoutPozEvidence":
-        await ctx.editText(
+        await ctx.editMessageText(
           "Обов’язково має бути підписаний договір з ПОЗ і докази участі ПОЗ у заході (сертифікат участі або перелік учасників від організатора).\n Докази завантажуються в RoME.",
           { reply_markup: backToMainMenu },
         );
         break;
       case "hcpInteractionWithPozRequirements":
-        await ctx.editText(
+        await ctx.editMessageText(
           "Обов'язковою умовою взаємодії з ПОЗ в разі залучення до надання послуг або уачсті в заході є укладення письмової угоди з ПОЗ до початку надання послуг або участі у заході. Гонорар ПОЗ за надані послуги не має перевищувати справедливої ринкової ціни (FMV). Для визначення належного рівня гонорару кожен ПОЗ класифікується (Tier 1 (International KOL); Tier 2 (National KOL); Tier 3 (Local KOL) на підставі опитувальника під час реєстрації в EpicX.",
           { reply_markup: backToMainMenu },
         );
         break;
       case "hcpInteractionWithPozCriteria":
-        await ctx.editText(
+        await ctx.editMessageText(
           "Критерії вибору ПОЗ:\n" +
             "•\tВідповідність рівня ПОЗ рівню Заходу;\n" +
             "•\tРезультат, який має бути досягнутий як наслідок запрошення ПОЗ до участі в певному заході;\n" +
@@ -299,14 +309,14 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "hcpInteractionWithPozEvidence":
-        await ctx.editText(
+        await ctx.editMessageText(
           "Збирання доказів правомірного і етичного залучення\n" +
             "Обов’язково має бути підписаний договір з ПОЗ і докази участі ПОЗ у заході (сертифікат участі або перелік учасників від організатора). Докази завантажуються в RoME. ",
           { reply_markup: backToMainMenu },
         );
         break;
       case "createEventConfirmBusinessAdvisory":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке консультативна рада?</b>\n" +
             "Рош Україна форум, на якому група експертів у конкретній галузі запрошена для надання консультацій та внесення пропозицій у своїй сфері компетенції.\n\n" +
             "<b>Хто може ініціювати проведення консультативної ради?</b>\n" +
@@ -337,7 +347,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmBusinessCongress":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке відвідування конгресу?</b>\n" +
             "Підтримка участі наших клієнтів (зокрема, ПОЗ) у медичних конгерсах індивідуально або групою. \n" +
             "\n" +
@@ -360,7 +370,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmBusinessProduct":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке захід щодо запуску продукту?</b>\n" +
             "Це зустріч, яка включає освітні заходи для ПОЗ, які зосереджені у галузі знань всіх аспектів, пов'язаних із запуском продукту. Метою є ефективна консолідація всієї відповідної наукової інформації щодо продукту. Це навчання надається експертами з кваліфікацією/досвідом у галузі освіти та з клінічним терапевтичним досвідом, а також командою бренду.\n\n" +
             "<b>Хто може ініціювати запуск продукту?</b>\n" +
@@ -382,7 +392,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmBusinessPromo":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке виступ спікера?</b>\n" +
             "Надання ПОЗ (спікером) послуги виступу на підставі письмового договору. Виступ може відбуватись на симпозіумі, протягом турне спікера, під час надання свідчень або зйомки інтерв'ю тощо.\n\n" +
             "<b>Хто може ініціювати залучення спікера до виступу?</b>\n" +
@@ -405,7 +415,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmBusinessSymposium":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке симпозіум?</b>\n" +
             "Симпозіум проводиться для публічного обговорення фармацевтики, включаючи поєднання індивідуальних презентацій, панельних дискусій та круглих столів. Захід спрямований на максимізацію взаємодії та навчання від експертів у фармацевтичній сфері.\n\n" +
             "<b>Хто може ініціювати проведення симпозіуму?</b>\n" +
@@ -429,7 +439,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmSciencesAdvisory":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке консультативна рада?</b>\n" +
             "Організований Рош Україна форум, на якому група експертів у конкретній галузі запрошена для надання консультацій та внесення пропозицій у своїй сфері компетенції.\n\n" +
             "<b>Хто може ініціювати проведення консультативної ради?</b>\n" +
@@ -462,7 +472,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmSciencesCongress":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке відвідування конгресу?</b>\n" +
             "Підтримка участі наших клієнтів (зокрема, ПОЗ) у медичних конгерсах індивідуально або групою. \n\n" +
             "<b>Хто може ініціювати відвідування конгресу?</b>\n" +
@@ -485,7 +495,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmSciencesProduct":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке захід щодо запуску продукту?</b>\n" +
             "Це зустріч, яка включає освітні заходи для ПОЗ, які зосереджені у галузі знань всіх аспектів, пов'язаних із запуском продукту. Метою є ефективна консолідація всієї відповідної наукової інформації щодо продукту. Це навчання надається експертами з кваліфікацією/досвідом у галузі освіти та з клінічним терапевтичним досвідом, а також командою бренду.\n\n" +
             "<b>може ініціювати запуск продукту?</b>\n" +
@@ -508,7 +518,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmSciencesSwap":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке Post Congress?</b>\n" +
             "Освітній захід, що проводяться після конгресу для інформування ширшої аудиторії ПОЗ про інформацію, представлену на конгресі. Метою такого заходу є надання детальної інформації про досягнення в науці, яка має відображати зміст конгресу.\n\n" +
             "<b>Хто може ініціювати Post Congress?</b>\n" +
@@ -530,7 +540,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmSciencesPreceptor":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке наставництво?</b>\n" +
             "Освітній захід (програма) для ПОЗ, спрямований на покращення знань і розуміння клінічного менеджменту та соціальної допомоги в умовах реального світу, який розроблений для залучення та навчання безпосередньо у медичних працівників, які спеціалізуються на лікуванні конкретної хвороби в умовах реальної клініки.\n\n" +
             "<b>Хто може ініціювати проведення наставництва?</b>\n" +
@@ -555,7 +565,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmSciencesRime":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке RIME?</b>\n" +
             "Освітня діяльність (захід або серія заходів) для медичних працівників, яка:\n" +
             "•\tініційована Рош Україна безпосередньо;\n" +
@@ -587,7 +597,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmSciencesInfo":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке обмін науковою інформацією?</b>\n" +
             "Обмін науковою інформацією слід розуміти як непромоційний обмін інформацією між Рош Україна,ПОЗ та науковою спільнотою, що зосереджується на розвитку медичних досліджень, лікуванні захворювань та належному використанні медичних препаратів Roche з метою покращення наукового розуміння та прогресу задля забезпечення найкращого можливого догляду за пацієнтами. Цей тип заходу ніколи не може носити промоційний характер.\n\n" +
             "<b>Хто може ініціювати проведення обміну науковою інформацією?</b>\n" +
@@ -612,7 +622,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmPolicyAdvisory":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке консультативна рада?</b>\n" +
             "Організований Рош Україна форум, на якому група експертів у конкретній галузі запрошена для надання консультацій та внесення пропозицій у своїй сфері компетенції.\n\n" +
             "<b>Хто може ініціювати проведення консультативної ради?</b>\n" +
@@ -643,7 +653,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmPolicySpeaker":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке виступ спікера?</b>\n" +
             "Надання ПОЗ (спікером) послуги виступу на підставі письмового договору. Виступ може відбуватись на симпозіумі, протягом турне спікера, під час надання свідчень або зйомки інтерв'ю тощо.\n" +
             "<b>Хто може ініціювати залучення спікера до виступу?</b>\n" +
@@ -666,7 +676,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "createEventConfirmPolicySymposium":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Що таке симпозіум?</b>\n" +
             "Симпозіум проводиться для публічного обговорення фармацевтики, включаючи поєднання індивідуальних презентацій, панельних дискусій та круглих столів. Захід спрямований на максимізацію взаємодії та навчання від експертів у фармацевтичній сфері.\n\n" +
             "<b>Хто може ініціювати проведення симпозіуму?</b>\n" +
@@ -690,12 +700,12 @@ bot.on("callback_query:data", async (ctx) => {
         break;
       case "shareSupportRejectEducation":
         await ctx.answerCallbackQuery("Медична освіта");
-        await ctx.editText("Мета підтримки - Медична освіта", {
+        await ctx.editMessageText("Мета підтримки - Медична освіта", {
           reply_markup: shareSupportRejectEducation,
         });
         break;
       case "shareSupportRejectEducationSmall":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Бюджет менше 10 тисяч Євро</b>\n\n" +
             "<b>Обмеження:</b>\n\n" +
             "•\tМетою надання підтримки для IME має бути підвищення спроможності наукової спільноти піклуватися про пацієнтів. Заходи IME ніколи не повинні використовуватися або подаватися як промоційні інструменти;\n" +
@@ -721,7 +731,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectEducationBig":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Бюджет 10 тисяч Євро або більше</b>\n" +
             "<b>Обмеження:</b>\n" +
             "•Метою надання підтримки для IME має бути підвищення спроможності наукової спільноти піклуватися про пацієнтів. Заходи IME ніколи не повинні використовуватися або подаватися як промоційні інструменти;\n" +
@@ -744,12 +754,12 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectPublication":
-        await ctx.editText("Мета підтримки - Незалежна публікація", {
+        await ctx.editMessageText("Мета підтримки - Незалежна публікація", {
           reply_markup: shareSupportRejectPublication,
         });
         break;
       case "shareSupportRejectPublicationSmall":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Обмеження</b>\n" +
             "•\tПублікація має відповідати вимогам Roche Global Publication Policy (GOV-0100075 v3);\n" +
             "•\tПідтримка не може надаватись індивідуально автору публікації;\n" +
@@ -768,7 +778,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectPublicationBig":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Обмеження</b>\n" +
             "•\tПублікація має відповідати вимогам Roche Global Publication Policy (GOV-0100075 v3);\n" +
             "•\tПідтримка не може надаватись індивідуально автору публікації;\n" +
@@ -787,13 +797,13 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectPatients":
-        await ctx.editText(
+        await ctx.editMessageText(
           "Мета підтримки - Підтримка пацієнтської спільноти",
           { reply_markup: shareSupportRejectPatients },
         );
         break;
       case "shareSupportRejectPatientsSmall":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Обмеження</b>\n" +
             "•\tНеобхідно уникати надання підтримки на проведення заходів пацієнтської спільноти в екстравагантних місцях;\n" +
             "•\tЗабороняється надавати підтримку для фінансування подарунків або влаштування розваг чи дозвілля;\n" +
@@ -811,7 +821,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectPatientsBig":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Обмеження</b>\n" +
             "•\tНеобхідно уникати надання підтримки на проведення заходів пацієнтської спільноти в екстравагантних місцях;\n" +
             "•\tЗабороняється надавати підтримку для фінансування подарунків або влаштування розваг чи дозвілля;\n" +
@@ -829,12 +839,12 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectCongress":
-        await ctx.editText("Мета підтримки - Участь у конгресі", {
+        await ctx.editMessageText("Мета підтримки - Участь у конгресі", {
           reply_markup: shareSupportRejectCongress,
         });
         break;
       case "shareSupportRejectCongressSmall":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Обмеження</b>\n" +
             "•\tНеобхідно уникати надання підтримки на участь в конгресах, якщо конгреси проводяться в екстравагантних місцях;\n" +
             "•\tРозмір підтримки має покривати виключно трансфер, харчування, проживання і реєстраційний внесок на участь у конгресі;\n" +
@@ -852,7 +862,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectCongressBig":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Обмеження</b>\n" +
             "•\tНеобхідно уникати надання підтримки на участь в конгресах, якщо конгреси проводяться в екстравагантних місцях;\n" +
             "•\tРозмір підтримки має покривати виключно трансфер, харчування, проживання і реєстраційний внесок на участь у конгресі;\n" +
@@ -870,12 +880,12 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectCharity":
-        await ctx.editText("Мета підтримки - Оплата членської участі", {
+        await ctx.editMessageText("Мета підтримки - Оплата членської участі", {
           reply_markup: shareSupportRejectCharity,
         });
         break;
       case "shareSupportRejectCharitySmall":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Реєстрація запиту:</b>\n" +
             "RoME після зустрічі групи попереднього обговорення.\n\n" +
             "<b>Хто затверджує?</b>\n" +
@@ -889,7 +899,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectCharityBig":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Реєстрація запиту:</b>\n" +
             "RoME після зустрічі групи попереднього обговорення.\n\n" +
             "<b>Хто затверджує?</b>\n" +
@@ -903,12 +913,12 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectExplore":
-        await ctx.editText("Мета підтримки - Дослідження", {
+        await ctx.editMessageText("Мета підтримки - Дослідження", {
           reply_markup: shareSupportRejectExplore,
         });
         break;
       case "shareSupportRejectExploreSmall":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Обмеження</b>\n" +
             "•\tПідтримка чможе бути надана виключно для наукових досліджень (наприклад, доклінічні дослідження, фундаментальні дослідження, дослідження біомаркерів тощо);\n" +
             "•\tДіяльність, яка призводить до створення клінічних доказів, а також дослідження, де пацієнти є або можуть приймаьти лікарські засоби Roche, повинні виконуватися як клінічні дослідження. Якщо чітке розмежування не є очевидним, необхідно провести попередню оцінку за допомогою дерева ріешнь GCP/GVP та консультацію з фахівцем GVP або іншими відповідними функціями та задокументувати це. Проєкти з дослідження біомаркерів, що аналізують раніше зібрані біологічні зразки пацієнтів, можуть розглядатися як об'єкти підтримки через гранти/пожертви або спонсорство за умови, що зразки не збираються проспективно і результати таких досліджень не матимуть негайного та прямого впливу на лікування пацієнтів;\n" +
@@ -931,7 +941,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectExploreBig":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Обмеження</b>\n" +
             "•\tПідтримка чможе бути надана виключно для наукових досліджень (наприклад, доклінічні дослідження, фундаментальні дослідження, дослідження біомаркерів тощо);\n" +
             "•\tДіяльність, яка призводить до створення клінічних доказів, а також дослідження, де пацієнти є або можуть приймаьти лікарські засоби Roche, повинні виконуватися як клінічні дослідження. Якщо чітке розмежування не є очевидним, необхідно провести попередню оцінку за допомогою дерева ріешнь GCP/GVP та консультацію з фахівцем GVP або іншими відповідними функціями та задокументувати це. Проєкти з дослідження біомаркерів, що аналізують раніше зібрані біологічні зразки пацієнтів, можуть розглядатися як об'єкти підтримки через гранти/пожертви або спонсорство за умови, що зразки не збираються проспективно і результати таких досліджень не матимуть негайного та прямого впливу на лікування пацієнтів;\n" +
@@ -954,7 +964,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectSupport":
-        await ctx.editText(
+        await ctx.editMessageText(
           "Мета підтримки - Підтримка інфраструктури (надання обладнання, ремонт)",
           {
             reply_markup: shareSupportRejectSupport,
@@ -962,7 +972,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectSupportSmall":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Обмеження</b>\n" +
             "•\tЗагалом, відповідно до принципу незалежності, недоцільно надавати підтримку на поточні (операційні) витрати. Зверніть увагу, що Roche прагне покращити доступ до ефективної, якісної медичної допомоги, в тому числі шляхом зміцнення медичної інфраструктури, що має на меті забезпечити стійке покращення систем охорони здоров'я;\n" +
             "•\tПідтримка інфраструктури здійснюється лише у виключних випадаках;\n" +
@@ -985,7 +995,7 @@ bot.on("callback_query:data", async (ctx) => {
         );
         break;
       case "shareSupportRejectSupportBig":
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Обмеження</b>\n" +
             "•\tЗагалом, відповідно до принципу незалежності, недоцільно надавати підтримку на поточні (операційні) витрати. Зверніть увагу, що Roche прагне покращити доступ до ефективної, якісної медичної допомоги, в тому числі шляхом зміцнення медичної інфраструктури, що має на меті забезпечити стійке покращення систем охорони здоров'я;\n" +
             "•\tПідтримка інфраструктури здійснюється лише у виключних випадаках;\n" +
@@ -1009,7 +1019,7 @@ bot.on("callback_query:data", async (ctx) => {
         break;
       case "shareSupportConfirm5k":
         await ctx.answerCallbackQuery("Менше 5 тисяч Євро");
-        await ctx.editText(
+        await ctx.editMessageText(
           "В разі спонсорства Рош Україна має отримати реальну вигоду в обмін на надану підтримку. Спонсорська підтримка надається на підставі письмового запиту і укладеного договору. Заборонено надавати спонсорську підтримку на підтримку інфраструктури (ремонт, закупівля обладнання). Запит на спонсорську допомогу реєструється в RoME і затверджується TAL.",
           {
             reply_markup: backToMainMenu,
@@ -1018,7 +1028,7 @@ bot.on("callback_query:data", async (ctx) => {
         break;
       case "shareSupportConfirm10k":
         await ctx.answerCallbackQuery("Від 5 до 10 тисяч Євро");
-        await ctx.editText(
+        await ctx.editMessageText(
           "В разі спонсорства Рош Україна має отримати реальну вигоду в обмін на надану підтримку. Спонсорська підтримка надається на підставі письмового запиту і укладеного договору. Заборонено надавати спонсорську підтримку на підтримку інфраструктури (ремонт, закупівля обладнання). Запит на спонсорську допомогу реєструється в RoME і затверджується Customer Experience Lead.",
           {
             reply_markup: backToMainMenu,
@@ -1027,7 +1037,7 @@ bot.on("callback_query:data", async (ctx) => {
         break;
       case "shareSupportConfirm11k":
         await ctx.answerCallbackQuery("Більше 10 тисяч Євро");
-        await ctx.editText(
+        await ctx.editMessageText(
           "В разі спонсорства Рош Україна має отримати реальну вигоду в обмін на надану підтримку. Спонсорська підтримка надається на підставі письмового запиту і укладеного договору. Заборонено надавати спонсорську підтримку на підтримку інфраструктури (ремонт, закупівля обладнання). Запит на спонсорську допомогу реєструється в RoME і затверджується Комітетом з комерційних питань (GM + Operations Chapter Lead + Compliance + Policy & Access Excellence Lead + Customer Experience Lead).",
           {
             reply_markup: backToMainMenu,
@@ -1041,7 +1051,7 @@ bot.on("callback_query:data", async (ctx) => {
         await incrementMenuStat(
           "Я хочу створити рішення для підтримки пацієнтів",
         );
-        await ctx.editText(
+        await ctx.editMessageText(
           "Рішення для пацієнтів - це організована активність, яка проводиться безпосередньо Рош Україна або від імені Рош Україна, яка має на меті надати пряму підтримку пацієнтам, наприклад, допомогу в отриманні правильного діагнозу, доступу до лікування або керуванні перебігу їхнього захворювання. \n" +
             "\n" +
             "Рішення для пацієнтів, в яких існує вірогідність двосторонньої комунікації з пацієнтами, в результаті якої можливе отримання інформації щодо безпечності лікарських засобів Roche (небажані явища), підлягають регулюванню відповідно до “Roche SOP-0102065 Global: Market Research and Patient Support Program Pharmacovigilance” та є програмами підтримки пацієнтів.\n" +
@@ -1074,7 +1084,7 @@ bot.on("callback_query:data", async (ctx) => {
         await ctx.answerCallbackQuery(
           "Я хочу створити рішення для підтримки пацієнтів ",
         );
-        await ctx.editText(
+        await ctx.editMessageText(
           "Кожен пацієнт має право приймати рішення щодо свого тіла та здоров'я. Для деяких рішень для пацієнтів, де потрібен контакт з пацієнтами, пацієнти повинні надати інформовану згоду на участь в рішенні для пацієнтів, додатково до згоди на обробку персональних даних, включаючи умови припинення участі та завершення рішення для пацієнтів.\n" +
             "\n" +
             "Пацієнти мають право вільно обирати та змінювати свого постачальника медичних послуг. Рішення для пацієнтів не повинні впливати на свободу вибору пацієнтами своїх лікарів та закладів охорони здоров'я, поза участю в рішенні для пацієнтів. Рішення для пацієнтів не повинні бути створені для задоволення інтересів конкретних лікарів чи закладів охорони здоров'я.\n" +
@@ -1098,7 +1108,7 @@ bot.on("callback_query:data", async (ctx) => {
       case "createPartnership":
         await ctx.answerCallbackQuery("Я хочу створити партнерство");
         await incrementMenuStat("Я хочу створити партнерство");
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Партнерство</b> - це співпраця між Рош Україна та однією або декількома авторитетними організаціями. Угоди, за якими Рош Україна просто надає кошти, не вважаються партнерствами.\n\n" +
             "<b>Ключові ознаки партнерства:</b>\n" +
             "•\tКожна сторона (партнер) повинна зробити значний і чітко визначений внесок у спільний проєкт (внески можуть включати людські ресурси, експертизу, обладнання, канали зв'язку, інформаційні технології та фінанси);\n" +
@@ -1133,7 +1143,7 @@ bot.on("callback_query:data", async (ctx) => {
         await ctx.answerCallbackQuery(
           "Заборона корупції та неправомірної вимоги ",
         );
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Ми не терпимо хабарництва або будь-яких інших форм корупційної бізнес-поведінки.</b>\n" +
             "Roche відкидає всі форми корупційної бізнес-поведінки, такі як хабарництво (публічне, приватне, активне та пасивне), розтрата, шахрайство, крадіжка та надання неправомірних переваг. Директива Roche щодо Ділової Доброчесності надає додаткові вказівки з цих питань.\n\n" +
             "<b>Хабарництво</b>\n" +
@@ -1151,7 +1161,7 @@ bot.on("callback_query:data", async (ctx) => {
         break;
       case "antiCorruptionConflict":
         await ctx.answerCallbackQuery("Конфлікт інтересів");
-        await ctx.editText(
+        await ctx.editMessageText(
           "<b>Особисті інтереси не повинні надмірно впливати на наше професійне судження./n</b>" +
             "Конфлікт інтересів виникає тоді, коли особисті інтереси працівника не узгоджуються з інтересами Roche і створюють конфліктуючі лояльності. Як співробітники Roche, ми повинні уникати ситуацій, де наші особисті інтереси конфліктують або здаються такими, що конфліктують з інтересами Roche./n/n" +
             "Діяльність родичів та близьких знайомих може спричиняти конфлікти інтересів. Ми не повинні брати участь, здаватися такими, що беруть участь, або чинити вплив на будь-яке рішення, яке може поставити наші власні інтереси в конфлікт із найкращими інтересами Roche./n/n" +
@@ -1169,7 +1179,7 @@ bot.on("callback_query:data", async (ctx) => {
         await ctx.answerCallbackQuery(
           "Повідомити про корупцію або конфлікт інтересів (текст з контактами)",
         );
-        await ctx.editText(
+        await ctx.editMessageText(
           "Якщо Ви стали свідком корупційного діяння або ділового рішення, зробленого під впливлом конфлікту інтересів, Ви можете повідомити про це керівнику Compliance або на канал <a href='https://www.roche.com/about/governance/code-of-conduct'>Speak Up</a>\n\n" +
             "Roche гарантує конфіденційність і захист від переслідувань викривачам корупції.\n",
           {
