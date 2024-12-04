@@ -124,13 +124,18 @@ bot.use(async (ctx, next) => {
 
 bot.on("callback_query:data", async (ctx) => {
   const callBackData = ctx.callbackQuery.data;
+  const message = ctx.callbackQuery.message;
+  const messageChatId = message.chat.id;
+  const messageMessageId = message.message_id;
   console.log(callBackData);
   try {
     switch (callBackData) {
       case "ethics-menu":
         await ctx.answerCallbackQuery("Документи з професійної етики");
         await incrementMenuStat("Документи з професійної етики");
-        await ctx.callbackQuery.message.editMessageText(
+        await ctx.api.editMessageText(
+          messageChatId,
+          messageMessageId,
           "Документи з професійної етики",
           {
             reply_markup: ethicsMenu,
@@ -145,7 +150,9 @@ bot.on("callback_query:data", async (ctx) => {
         await incrementMenuStat(
           "Я хочу взаємодіяти з професіоналами охорони здоров’я (ПОЗ)",
         );
-        await ctx.callbackQuery.message.editMessageText(
+        await ctx.api.editMessageText(
+          messageChatId,
+          messageMessageId,
           "Як ви хочете взаємодіяти?",
           {
             reply_markup: hcpInteractionMenu,
