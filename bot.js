@@ -101,9 +101,17 @@ bot.command("menu", async (ctx) => {
 });
 
 bot.callbackQuery("backToMainMenu", async (ctx) => {
-  await ctx.callbackQuery.message.editMessageText("Вітаємо в головному меню.", {
-    reply_markup: mainMenu,
-  });
+  const message = ctx.callbackQuery.message;
+  const messageChatId = message.chat.id;
+  const messageMessageId = message.message_id;
+  await ctx.callbackQuery.message.editMessageText(
+    messageChatId,
+    messageMessageId,
+    "Вітаємо в головному меню.",
+    {
+      reply_markup: mainMenu,
+    },
+  );
   await ctx.answerCallbackQuery();
 });
 
