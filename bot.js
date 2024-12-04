@@ -104,7 +104,7 @@ bot.callbackQuery("backToMainMenu", async (ctx) => {
   const message = ctx.callbackQuery.message;
   const messageChatId = message.chat.id;
   const messageMessageId = message.message_id;
-  await ctx.callbackQuery.message.editMessageText(
+  await ctx.api.editMessageText(
     messageChatId,
     messageMessageId,
     "Вітаємо в головному меню.",
