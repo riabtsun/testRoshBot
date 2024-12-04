@@ -101,7 +101,7 @@ bot.command("menu", async (ctx) => {
 });
 
 bot.callbackQuery("backToMainMenu", async (ctx) => {
-  await ctx.callbackQuery.message.editText("Вітаємо в головному меню.", {
+  await ctx.callbackQuery.message.editMessageText("Вітаємо в головному меню.", {
     reply_markup: mainMenu,
   });
   await ctx.answerCallbackQuery();
