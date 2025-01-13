@@ -1,18 +1,18 @@
 const { InlineKeyboard } = require("grammy");
 
 const createEvent = new InlineKeyboard()
-  .text("i.Так", "createEventConfirm")
+  .text("Так", "createEventConfirm")
   .row()
-  .text("ii.Ні – перехід на сторінку Спонсорство", "createEventReject")
+  .text("Ні", "shareSupportConfirm")
   .row()
   .text("< В головне меню", "backToMainMenu");
 
 const createEventConfirm = new InlineKeyboard()
-  .text("a.Ділова (комерційна)", "createEventConfirmBusiness")
+  .text("Ділова (комерційна)", "createEventConfirmBusiness")
   .row()
-  .text("b.Наукова", "createEventConfirmSciences")
+  .text("Наукова", "createEventConfirmSciences")
   .row()
-  .text("c.Policy shaping", "createEventConfirmPolicy")
+  .text("Policy shaping", "createEventConfirmPolicy")
   .row()
   .text("< В головне меню", "backToMainMenu");
 
@@ -22,43 +22,40 @@ const createEventConfirmBusiness = new InlineKeyboard()
     "createEventConfirmBusinessAdvisory"
   )
   .row()
-  .text("2.Участь у конгресі", "createEventConfirmBusinessCongress")
+  .text("Участь у конгресі", "createEventConfirmBusinessCongress")
   .row()
   .text(
-    "3.Запуск продукту (Product Launch) ",
+    "Запуск продукту (Product Launch) ",
     "createEventConfirmBusinessProduct"
   )
   .row()
   .text(
-    "4.Промоційний захід з залученням спікера",
+    "Промоційний захід з залученням спікера",
     "createEventConfirmBusinessPromo"
   )
   .row()
-  .text("5.Симпозіум", "createEventConfirmBusinessSymposium")
+  .text("Симпозіум", "createEventConfirmBusinessSymposium")
   .row()
   .text("< В головне меню", "backToMainMenu");
 
 const createEventConfirmSciences = new InlineKeyboard()
   .text(
-    "1.Консультативна  рада (Advisory Board)",
+    "Консультативна  рада (Advisory Board)",
     "createEventConfirmSciencesAdvisory"
   )
   .row()
-  .text("2.Участь у конгресі", "createEventConfirmSciencesCongress")
+  .text("Участь у конгресі", "createEventConfirmSciencesCongress")
+  .row()
+  .text("Запуск продукту (Product Launch)", "createEventConfirmSciencesProduct")
+  .row()
+  .text("Обмін інформацієї після конресу", "createEventConfirmSciencesSwap")
+  .row()
+  .text("Наставництво (Preceptorship)", "createEventConfirmSciencesPreceptor")
+  .row()
+  .text("Медична освіта (RIME)", "createEventConfirmSciencesRime")
   .row()
   .text(
-    "3.Запуск продукту (Product Launch)",
-    "createEventConfirmSciencesProduct"
-  )
-  .row()
-  .text("4.Обмін інформацієї після конресу", "createEventConfirmSciencesSwap")
-  .row()
-  .text("5.Наставництво (Preceptorship)", "createEventConfirmSciencesPreceptor")
-  .row()
-  .text("6.Медична освіта (RIME)", "createEventConfirmSciencesRime")
-  .row()
-  .text(
-    "7.Захід щодо обміну науковою інформацією",
+    "Захід щодо обміну науковою інформацією",
     "createEventConfirmSciencesInfo"
   )
   .row()
@@ -66,13 +63,13 @@ const createEventConfirmSciences = new InlineKeyboard()
 
 const createEventConfirmPolicy = new InlineKeyboard()
   .text(
-    "1.Консультативна рада (Advisory Board)",
+    "Консультативна рада (Advisory Board)",
     "createEventConfirmPolicyAdvisory"
   )
   .row()
-  .text("2.Захід з залученням спікера", "createEventConfirmPolicySpeaker")
+  .text("Захід з залученням спікера", "createEventConfirmPolicySpeaker")
   .row()
-  .text("3.Симпозіум", "createEventConfirmPolicySymposium")
+  .text("Симпозіум", "createEventConfirmPolicySymposium")
   .row()
   .text("< В головне меню", "backToMainMenu");
 

@@ -1,53 +1,38 @@
 const { InlineKeyboard } = require("grammy");
 
 const hcpInteractionMenu = new InlineKeyboard()
-  .text(
-    "i.Хочу залучити ПОЗ до участі у заході без надання послуг",
-    "hcpInteractionWithoutPoz"
-  )
+  .text("Без надання послуг", "hcpInteractionWithoutPoz")
   .row()
-  .text("ii.Хочу залучити ПОЗ до надання послуг", "hcpInteractionWithPoz")
+  .text("Надання послуг HCP", "hcpInteractionWithPoz")
   .row()
   .text("< В головне меню", "backToMainMenu");
 
 const hcpInteractionWithPoz = new InlineKeyboard()
-  .text("1.Вимоги і обмеження", "hcpInteractionWithPozRequirements")
+  .text("Вимоги і обмеження", "hcpInteractionWithPozRequirements")
   .row()
-  .text("2.Критерії вибору ПОЗ", "hcpInteractionWithPozCriteria")
+  .text("Критерії вибору HCP", "hcpInteractionWithPozCriteria")
   .row()
-  .text(
-    "3.Збирання доказів правомірного і етичного залучення",
-    "hcpInteractionWithPozEvidence"
-  )
+  .text("Збирання доказів", "hcpInteractionWithPozEvidence")
   .row()
   .text("< В головне меню", "backToMainMenu");
 
 const hcpInteractionWithoutPoz = new InlineKeyboard()
-  .text("1.Вимоги і обмеження", "hcpInteractionWithoutPozRequirements")
+  .text("Вимоги і обмеження", "hcpInteractionWithoutPozRequirements")
   .row()
-  .text(
-    "2.Коротка інструкція щодо реєстрації залучення",
-    "hcpInteractionWithoutPozInstruction"
-  )
+  .text("Реєстрація залучення", "hcpInteractionWithoutPozInstruction")
   .row()
-  .text(
-    "3.Збирання доказів правомірного і етичного залучення",
-    "hcpInteractionWithoutPozEvidence"
-  )
+  .text("Збирання доказів", "hcpInteractionWithoutPozEvidence")
   .row()
   .text("< В головне меню", "backToMainMenu");
 
 const hcpInteractionWithoutPozRequirements = new InlineKeyboard()
-  .text("a.Загальні вимоги", "hcpInteractionWithoutPozRequirementsGeneral")
+  .text("Загальні вимоги", "hcpInteractionWithoutPozRequirementsGeneral")
   .row()
-  .text(
-    "b.Місце проведення заходу",
-    "hcpInteractionWithoutPozRequirementsPlace"
-  )
+  .text("Місце проведення заходу", "hcpInteractionWithoutPozRequirementsPlace")
   .row()
-  .text("c.Харчування", "hcpInteractionWithoutPozRequirementsFood")
+  .text("Харчування", "hcpInteractionWithoutPozRequirementsFood")
   .row()
-  .text("d.Проїзд і проживання", "hcpInteractionWithoutPozRequirementsDrive")
+  .text("Проїзд і проживання", "hcpInteractionWithoutPozRequirementsDrive")
   .row()
   .text("< В головне меню", "backToMainMenu");
 

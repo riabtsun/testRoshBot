@@ -77,7 +77,7 @@ const requestContactKeyboard = new Keyboard()
 bot.command("start", async (ctx) => {
   await ctx.reply(
     "Вітаємо! Будь ласка, надайте свій номер телефону для доступу до бота.",
-    { reply_markup: requestContactKeyboard },
+    { reply_markup: requestContactKeyboard }
   );
 });
 
@@ -95,7 +95,7 @@ bot.command("menu", async (ctx) => {
   } catch (error) {
     console.error("Помилка при аутентифікації користувача:", error);
     await ctx.reply(
-      "Виникла помилка при обробці вашого запиту. Спробуйте пізніше.",
+      "Виникла помилка при обробці вашого запиту. Спробуйте пізніше."
     );
   }
 });
@@ -110,7 +110,7 @@ bot.callbackQuery("backToMainMenu", async (ctx) => {
     "Вітаємо в головному меню.",
     {
       reply_markup: mainMenu,
-    },
+    }
   );
   await ctx.answerCallbackQuery();
 });
@@ -139,16 +139,16 @@ bot.on("callback_query:data", async (ctx) => {
           "Документи з професійної етики",
           {
             reply_markup: ethicsMenu,
-          },
+          }
         );
         break;
       //2 ethic menu
       case "hcpInteractionMenu":
         await ctx.answerCallbackQuery(
-          "Я хочу взаємодіяти з професіоналами охорони здоров’я (ПОЗ)",
+          "Я хочу взаємодіяти з професіоналами охорони здоров’я (ПОЗ)"
         );
         await incrementMenuStat(
-          "Я хочу взаємодіяти з професіоналами охорони здоров’я (ПОЗ)",
+          "Я хочу взаємодіяти з професіоналами охорони здоров’я (ПОЗ)"
         );
         await ctx.api.editMessageText(
           messageChatId,
@@ -156,12 +156,12 @@ bot.on("callback_query:data", async (ctx) => {
           "Як ви хочете взаємодіяти?",
           {
             reply_markup: hcpInteractionMenu,
-          },
+          }
         );
         break;
       case "hcpInteractionWithoutPoz":
         await ctx.answerCallbackQuery(
-          "Хочу залучити ПОЗ до участі у заході без надання послуг",
+          "Хочу залучити ПОЗ до участі у заході без надання послуг"
         );
         await ctx.api.editMessageText(
           messageChatId,
@@ -169,7 +169,7 @@ bot.on("callback_query:data", async (ctx) => {
           "Хочу залучити ПОЗ до участі у заході без надання послуг",
           {
             reply_markup: hcpInteractionWithoutPoz,
-          },
+          }
         );
         break;
       case "hcpInteractionWithoutPozRequirements":
@@ -180,7 +180,7 @@ bot.on("callback_query:data", async (ctx) => {
           "Вимоги і обмеження",
           {
             reply_markup: hcpInteractionWithoutPozRequirements,
-          },
+          }
         );
         break;
       case "hcpInteractionWithPoz":
@@ -229,7 +229,7 @@ bot.on("callback_query:data", async (ctx) => {
           "Рош отримує вигоду в обмін на надання підтримки?",
           {
             reply_markup: shareSupport,
-          },
+          }
         );
         break;
       case "shareSupportReject":
@@ -239,14 +239,14 @@ bot.on("callback_query:data", async (ctx) => {
         });
         break;
       case "shareSupportConfirm":
-        await ctx.answerCallbackQuery("1.Це спонсорство. Який бюджет? ");
-        await ctx.editMessageText("1.Це спонсорство. Який бюджет? ", {
+        await ctx.answerCallbackQuery("Це спонсорство. Який бюджет? ");
+        await ctx.editMessageText("Це спонсорство. Який бюджет? ", {
           reply_markup: shareSupportConfirm,
         });
         break;
       // 7 docs templates
       case "docsTemplates":
-        await ctx.answerCallbackQuery("7.Шаблони документів");
+        await ctx.answerCallbackQuery("Шаблони документів");
         await incrementMenuStat("Шаблони документів");
         await ctx.editMessageText("Шаблони документів", {
           reply_markup: docsTemplates,
@@ -266,7 +266,7 @@ bot.on("callback_query:data", async (ctx) => {
           "Рош Україна уникає надання будь-яких благ ПОЗ  або закладам охорони здоров'я, які можуть бути сприйняті як неправомірні стимули для призначення, рекомендації, закупівлі, замовлення, постачання, використання, продажу, оренди або введення лікарських засобів Roche, і бере до уваги можливе сприйняття таких дій перед тим, як їх здійснити.\n" +
             "ПОЗ має бути зареєстрований в EpicX. \n" +
             "Якщо Ви залучаєте ПОЗ до участі в заході, Ви маєте визначити критерії на підставі яких Ви обираєте саме цього ПОЗ для залучення. \n",
-          { reply_markup: backToMainMenu },
+          { reply_markup: backToMainMenu }
         );
         break;
       case "hcpInteractionWithoutPozRequirementsPlace":
@@ -276,7 +276,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tзаміські клуби;\n" +
             "•\tзаклади, які позиціонують себе як курорти, спа-центри, заклади відпочинку чи розваг;\n" +
             "•\tготелі, які містять казино, незалежно від кількості зірок.\n",
-          { reply_markup: backToMainMenu },
+          { reply_markup: backToMainMenu }
         );
         break;
       case "hcpInteractionWithoutPozRequirementsFood":
@@ -285,7 +285,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tМаксимальна вартість однієї трапези: 1440 грн. з ПДВ;\n" +
             "•\tМаксимальна вартість всіх витрат на гостинність на 1 ПОЗ протягом 1 дня: 2400 грн. з ПДВ;\n" +
             "•\tМаксимальна вартість витрат на одну неперсоналізовану трапезу (наприклад, фуршет під час заходу): 1600 грн. з ПДВ.\n",
-          { reply_markup: backToMainMenu },
+          { reply_markup: backToMainMenu }
         );
         break;
       case "hcpInteractionWithoutPozRequirementsDrive":
@@ -294,25 +294,25 @@ bot.on("callback_query:data", async (ctx) => {
             "Залізничний транспорт: 1 клас дозволяється\n" +
             "Розумні витрати на транспорт під час залучення можуть бути відшкодовані.\n" +
             "Проживання: готелі не більше 4 зірок, заборонені «люксові» готелі.\n",
-          { reply_markup: backToMainMenu },
+          { reply_markup: backToMainMenu }
         );
         break;
       case "hcpInteractionWithoutPozInstruction":
         await ctx.editMessageText(
           "Залучення реєструється в RoME під час створення заходу (create – Event) або як окреме залучення (create – Standalone Contract/Standalone Engagement)",
-          { reply_markup: backToMainMenu },
+          { reply_markup: backToMainMenu }
         );
         break;
       case "hcpInteractionWithoutPozEvidence":
         await ctx.editMessageText(
           "Обов’язково має бути підписаний договір з ПОЗ і докази участі ПОЗ у заході (сертифікат участі або перелік учасників від організатора).\n Докази завантажуються в RoME.",
-          { reply_markup: backToMainMenu },
+          { reply_markup: backToMainMenu }
         );
         break;
       case "hcpInteractionWithPozRequirements":
         await ctx.editMessageText(
           "Обов'язковою умовою взаємодії з ПОЗ в разі залучення до надання послуг або уачсті в заході є укладення письмової угоди з ПОЗ до початку надання послуг або участі у заході. Гонорар ПОЗ за надані послуги не має перевищувати справедливої ринкової ціни (FMV). Для визначення належного рівня гонорару кожен ПОЗ класифікується (Tier 1 (International KOL); Tier 2 (National KOL); Tier 3 (Local KOL) на підставі опитувальника під час реєстрації в EpicX.",
-          { reply_markup: backToMainMenu },
+          { reply_markup: backToMainMenu }
         );
         break;
       case "hcpInteractionWithPozCriteria":
@@ -327,14 +327,14 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tНаявність наукових публікацій;\n" +
             "•\tІндекс цитування Hirsch;\n" +
             "•\tЧи впроваджує ПОЗ нові методи лікування одним із перших («зірка, що сходить»).\n",
-          { reply_markup: backToMainMenu },
+          { reply_markup: backToMainMenu }
         );
         break;
       case "hcpInteractionWithPozEvidence":
         await ctx.editMessageText(
           "Збирання доказів правомірного і етичного залучення\n" +
             "Обов’язково має бути підписаний договір з ПОЗ і докази участі ПОЗ у заході (сертифікат участі або перелік учасників від організатора). Докази завантажуються в RoME. ",
-          { reply_markup: backToMainMenu },
+          { reply_markup: backToMainMenu }
         );
         break;
       case "createEventConfirmBusinessAdvisory":
@@ -365,7 +365,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tСлід задокументувати (і додати в RoME), як поради були використані або причини, чому вони не були використані.\n" +
             "•\tКількість радників повинна бути мінімальною, необхідною для отримання якісних порад. Як загальне правило, максимальна кількість радників не повинна перевищувати 20.\n" +
             "•\tУчасть співробітників Рош Україна в засіданнях консультативної ради повинна бути обмежена тими, хто необхідний для досягнення цілей засідання або для прослуховування та збору порад.\n",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "createEventConfirmBusinessCongress":
@@ -388,7 +388,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tУкладені угоди з ПОЗ;\n" +
             "•\tЗвіт про проведення заходу (з фотографіями (з фотографіями та доказами участі залучених ПОЗ, наприклад, сертифікатами участі ПОЗ у заході або переліком відвідувачів заходу (attendance sheet) від організатора).\n" +
             "Всі документи (копії) мають бути завантажені в RoME.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "createEventConfirmBusinessProduct":
@@ -410,7 +410,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tЗвіт про проведення заходу (з фотографіями та доказами участі залучених ПОЗ, наприклад, сертифікатами участі ПОЗ у заході або переліком відвідувачів заходу (attendance sheet) від організатора).\n" +
             "\n" +
             "Всі документи (копії) мають бути завантажені в RoME.\n",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "createEventConfirmBusinessPromo":
@@ -433,7 +433,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tЗвіт про проведення заходу (з фотографіями та доказами участі залученого ПОЗ, наприклад, сертифікатами участі ПОЗ у заході або переліком відвідувачів заходу (attendance sheet) від організатора).\n" +
             "\n" +
             "Всі документи (копії) мають бути завантажені в RoME.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "createEventConfirmBusinessSymposium":
@@ -457,7 +457,7 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
       case "createEventConfirmSciencesAdvisory":
@@ -490,7 +490,7 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
       case "createEventConfirmSciencesCongress":
@@ -513,7 +513,7 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
       case "createEventConfirmSciencesProduct":
@@ -536,7 +536,7 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
       case "createEventConfirmSciencesSwap":
@@ -558,7 +558,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tЗвіт про проведення заходу з фотографіями;\n" +
             "•\tДокази участі залучених лікарів у проведеному заході (сертифікати про участь, списки учасників від організатора, фотозвіт тощо).\n" +
             "Всі документи (копії) мають бути завантажені в RoME.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "createEventConfirmSciencesPreceptor":
@@ -583,7 +583,7 @@ bot.on("callback_query:data", async (ctx) => {
             "<b>Які ще є особливості?\n</b>" +
             "•\tЗаклад (база)  для проведення наставництва повинен бути обраний на основі досвіду, відповідної кваліфікації, придатності та якості у конкретній галузі перед затвердженням наставництва;\n" +
             "•\tНаукова потреба проведення наставництва, критерії відбору нзакладу (бази) та участі ПОЗ у наставництві мають бути визначені та зазначені в системі RoME.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "createEventConfirmSciencesRime":
@@ -615,7 +615,7 @@ bot.on("callback_query:data", async (ctx) => {
             "<b>Які ще є особливості?</b>\n" +
             "•\tІнформація щодо застосування лікарського засобу Roche до його реєстрації (pre-approval) або не за призначенням (off-label use) може бути частиною освітніх матеріалів лише за умови, що включення такої інформації обумовлено легітимною зареєстрованою науковою потребою, як-от наявність нових даних клінічного випробування, важливих для наукової спільноти;\n" +
             "•\tПОЗ, які залучаються до участі в освітньому заході як учасники (не спікери), мають відповідати встановленим власником заходу критеріям вибору учасників. Такі критерії вибору мають бути зазначені в системі RoME.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "createEventConfirmSciencesInfo":
@@ -640,7 +640,7 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
       case "createEventConfirmPolicyAdvisory":
@@ -671,7 +671,7 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
       case "createEventConfirmPolicySpeaker":
@@ -694,7 +694,7 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
       case "createEventConfirmPolicySymposium":
@@ -717,7 +717,7 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
       case "shareSupportRejectEducation":
@@ -749,7 +749,7 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
       case "shareSupportRejectEducationBig":
@@ -772,7 +772,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•Протокол обговорення запиту групою попереднього обговорення;\n" +
             "•Підписаний договір\n" +
             "•Лист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportRejectPublication":
@@ -796,7 +796,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tПідписаний договір;\n" +
             "•\tЛист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином;\n" +
             "•\tКопія виданої публікації.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportRejectPublicationBig":
@@ -815,13 +815,13 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tПідписаний договір;\n" +
             "•\tЛист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином;\n" +
             "•\tКопія виданої публікації.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportRejectPatients":
         await ctx.editMessageText(
           "Мета підтримки - Підтримка пацієнтської спільноти",
-          { reply_markup: shareSupportRejectPatients },
+          { reply_markup: shareSupportRejectPatients }
         );
         break;
       case "shareSupportRejectPatientsSmall":
@@ -839,7 +839,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tПротокол обговорення запиту групою попереднього обговорення;\n" +
             "•\tПідписаний договір;\n" +
             "•\tЛист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportRejectPatientsBig":
@@ -857,7 +857,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tПротокол обговорення запиту групою попереднього обговорення;\n" +
             "•\tПідписаний договір;\n" +
             "•\tЛист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportRejectCongress":
@@ -880,7 +880,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tПротокол обговорення запиту групою попереднього обговорення;\n" +
             "•\tПідписаний договір;\n" +
             "•\tЛист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportRejectCongressBig":
@@ -898,7 +898,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tПротокол обговорення запиту групою попереднього обговорення;\n" +
             "•\tПідписаний договір;\n" +
             "Лист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином.\n\n",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportRejectCharity":
@@ -917,7 +917,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tПротокол обговорення запиту групою попереднього обговорення;\n" +
             "•\tПідписаний договір;\n" +
             "•\tЛист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportRejectCharityBig":
@@ -931,7 +931,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tПротокол обговорення запиту групою попереднього обговорення;\n" +
             "•\tПідписаний договір;\n" +
             "Лист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportRejectExplore":
@@ -959,7 +959,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tЛист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином;\n" +
             "•\tПрограма (методологія) або протокол дослідження.\n" +
             "•\tЗвіт або інший документ, який містить результати дослідження.\n",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportRejectExploreBig":
@@ -982,7 +982,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tЛист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином;\n" +
             "•\tПрограма (методологія) або протокол дослідження.\n" +
             "•\tЗвіт або інший документ, який містить результати дослідження.\n",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportRejectSupport":
@@ -990,7 +990,7 @@ bot.on("callback_query:data", async (ctx) => {
           "Мета підтримки - Підтримка інфраструктури (надання обладнання, ремонт)",
           {
             reply_markup: shareSupportRejectSupport,
-          },
+          }
         );
         break;
       case "shareSupportRejectSupportSmall":
@@ -1013,7 +1013,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tПідписаний договір;\n" +
             "•\tЛист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином;\n" +
             "•\tФотозвіт про використання підтримки.",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportRejectSupportBig":
@@ -1036,7 +1036,7 @@ bot.on("callback_query:data", async (ctx) => {
             "•\tПідписаний договір;\n" +
             "•\tЛист-подяка від отримувача підтримки, в якому зазначається, що підтримка була використана належним чином;\n" +
             "•\tФотозвіт про використання підтримки.\n",
-          { reply_markup: backToMainMenu, parse_mode: "HTML" },
+          { reply_markup: backToMainMenu, parse_mode: "HTML" }
         );
         break;
       case "shareSupportConfirm5k":
@@ -1045,7 +1045,7 @@ bot.on("callback_query:data", async (ctx) => {
           "В разі спонсорства Рош Україна має отримати реальну вигоду в обмін на надану підтримку. Спонсорська підтримка надається на підставі письмового запиту і укладеного договору. Заборонено надавати спонсорську підтримку на підтримку інфраструктури (ремонт, закупівля обладнання). Запит на спонсорську допомогу реєструється в RoME і затверджується TAL.",
           {
             reply_markup: backToMainMenu,
-          },
+          }
         );
         break;
       case "shareSupportConfirm10k":
@@ -1054,7 +1054,7 @@ bot.on("callback_query:data", async (ctx) => {
           "В разі спонсорства Рош Україна має отримати реальну вигоду в обмін на надану підтримку. Спонсорська підтримка надається на підставі письмового запиту і укладеного договору. Заборонено надавати спонсорську підтримку на підтримку інфраструктури (ремонт, закупівля обладнання). Запит на спонсорську допомогу реєструється в RoME і затверджується Customer Experience Lead.",
           {
             reply_markup: backToMainMenu,
-          },
+          }
         );
         break;
       case "shareSupportConfirm11k":
@@ -1063,15 +1063,15 @@ bot.on("callback_query:data", async (ctx) => {
           "В разі спонсорства Рош Україна має отримати реальну вигоду в обмін на надану підтримку. Спонсорська підтримка надається на підставі письмового запиту і укладеного договору. Заборонено надавати спонсорську підтримку на підтримку інфраструктури (ремонт, закупівля обладнання). Запит на спонсорську допомогу реєструється в RoME і затверджується Комітетом з комерційних питань (GM + Operations Chapter Lead + Compliance + Policy & Access Excellence Lead + Customer Experience Lead).",
           {
             reply_markup: backToMainMenu,
-          },
+          }
         );
         break;
       case "createPatientsSupport":
         await ctx.answerCallbackQuery(
-          "Я хочу створити рішення для підтримки пацієнтів",
+          "Я хочу створити рішення для підтримки пацієнтів"
         );
         await incrementMenuStat(
-          "Я хочу створити рішення для підтримки пацієнтів",
+          "Я хочу створити рішення для підтримки пацієнтів"
         );
         await ctx.editMessageText(
           "Рішення для пацієнтів - це організована активність, яка проводиться безпосередньо Рош Україна або від імені Рош Україна, яка має на меті надати пряму підтримку пацієнтам, наприклад, допомогу в отриманні правильного діагнозу, доступу до лікування або керуванні перебігу їхнього захворювання. \n" +
@@ -1099,12 +1099,12 @@ bot.on("callback_query:data", async (ctx) => {
             "Якщо рішення для пацієнтів передбачає створення, розробку або використання об'єктів, які можуть бути захищеними правами інтелектуальної власності, відповідні функції (Legal тощо) повинні бути залучені на ранніх етапах розробки дизайну рішення.",
           {
             reply_markup: createPatientsSupport,
-          },
+          }
         );
         break;
       case "createPatientsSupportPt2":
         await ctx.answerCallbackQuery(
-          "Я хочу створити рішення для підтримки пацієнтів ",
+          "Я хочу створити рішення для підтримки пацієнтів "
         );
         await ctx.editMessageText(
           "Кожен пацієнт має право приймати рішення щодо свого тіла та здоров'я. Для деяких рішень для пацієнтів, де потрібен контакт з пацієнтами, пацієнти повинні надати інформовану згоду на участь в рішенні для пацієнтів, додатково до згоди на обробку персональних даних, включаючи умови припинення участі та завершення рішення для пацієнтів.\n" +
@@ -1124,7 +1124,7 @@ bot.on("callback_query:data", async (ctx) => {
             "З особливою уважністю потрібно ставитися до умов рішень для пацієнтів у випадку їх проведення стосовно лікарських засобів, що приймаються пожиттєво, оскільки в подальшому пацієнт не зможе відмовитися від цього лікарського засобу, а ціна на нього після закінчення строку дії рішення зросте. Рекомендується розробляти стратегію завершення рішення на етапі розробки дизайну рішення.\n",
           {
             reply_markup: createPatientsSupportPt2,
-          },
+          }
         );
         break;
       case "createPartnership":
@@ -1158,12 +1158,12 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
       case "antiCorruptionBan":
         await ctx.answerCallbackQuery(
-          "Заборона корупції та неправомірної вимоги ",
+          "Заборона корупції та неправомірної вимоги "
         );
         await ctx.editMessageText(
           "<b>Ми не терпимо хабарництва або будь-яких інших форм корупційної бізнес-поведінки.</b>\n" +
@@ -1178,7 +1178,7 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
       case "antiCorruptionConflict":
@@ -1194,12 +1194,12 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
       case "antiCorruptionInform":
         await ctx.answerCallbackQuery(
-          "Повідомити про корупцію або конфлікт інтересів (текст з контактами)",
+          "Повідомити про корупцію або конфлікт інтересів (текст з контактами)"
         );
         await ctx.editMessageText(
           "Якщо Ви стали свідком корупційного діяння або ділового рішення, зробленого під впливлом конфлікту інтересів, Ви можете повідомити про це керівнику Compliance або на канал <a href='https://www.roche.com/about/governance/code-of-conduct'>Speak Up</a>\n\n" +
@@ -1207,7 +1207,7 @@ bot.on("callback_query:data", async (ctx) => {
           {
             reply_markup: backToMainMenu,
             parse_mode: "HTML",
-          },
+          }
         );
         break;
     }
@@ -1237,7 +1237,7 @@ bot.use(async (ctx, next) => {
         "У вас нет доступа к этому боту. Пожалуйста, отправьте свой номер телефона.",
         {
           reply_markup: requestContactKeyboard,
-        },
+        }
       );
     }
   } catch (error) {

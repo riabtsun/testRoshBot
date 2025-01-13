@@ -63,11 +63,11 @@ const shareSupportRejectSupport = new InlineKeyboard()
   .text("Бюджет 10 тисяч Євро або більше", "shareSupportRejectSupportBig");
 
 const shareSupportConfirm = new InlineKeyboard()
-  .text("a.Менше 5 тисяч Євро", "shareSupportConfirm5k")
+  .text("Менше 5 тисяч Євро", "shareSupportConfirm5k")
   .row()
-  .text("b.Від 5 до 10 тисяч Євро", "shareSupportConfirm10k")
+  .text("Від 5 до 10 тисяч Євро", "shareSupportConfirm10k")
   .row()
-  .text("c.Більше 10 тисяч Євро", "shareSupportConfirm11k")
+  .text("Більше 10 тисяч Євро", "shareSupportConfirm11k")
   .row()
   .text("< В головне меню", "backToMainMenu");
 

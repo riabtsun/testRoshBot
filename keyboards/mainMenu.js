@@ -3,26 +3,20 @@ const { InlineKeyboard } = require("grammy");
 // Основне меню
 
 const mainMenu = new InlineKeyboard()
-  .text("1. Документи з професійної етики", "ethics-menu")
+  .text("Документи compliance", "ethics-menu")
   .row()
-  .text(
-    "2.Я хочу взаємодіяти з професіоналами охорони здоров’я (ПОЗ)",
-    "hcpInteractionMenu"
-  )
+  .text("Я хочу взаємодіяти з HCP", "hcpInteractionMenu")
   .row()
-  .text("3.Я хочу створити захід", "createEvent")
+  .text("Я хочу створити захід", "createEvent")
   .row()
-  .text("4.Я хочу надати підтримку на запит", "shareSupport")
+  .text("Я хочу надати підтримку на запит", "shareSupport")
   .row()
-  .text(
-    "5.Я хочу створити рішення для підтримки пацієнтів",
-    "createPatientsSupport"
-  )
+  .text("Я хочу створити PSP", "createPatientsSupport")
   .row()
-  .text("6.Я хочу створити партнерство", "createPartnership")
+  .text("Я хочу створити партнерство", "createPartnership")
   .row()
-  .text("7.Шаблони документів", "docsTemplates")
+  .text("Шаблони документів", "docsTemplates")
   .row()
-  .text("8.Запобігання корупції", "antiCorruption");
+  .text("Запобігання корупції", "antiCorruption");
 
 module.exports = mainMenu;
