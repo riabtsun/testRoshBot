@@ -1,6 +1,5 @@
 require("dotenv/config");
-const { Bot, Keyboard, InlineKeyboard } = require("grammy");
-const { hydrateApi, hydrateContext } = require("@grammyjs/hydrate");
+const { Bot, Keyboard, Context, InlineKeyboard } = require("grammy");
 const connectDB = require("./index");
 const Worker = require("./models/Worker");
 const mainMenu = require("./keyboards/mainMenu");
@@ -49,9 +48,6 @@ const bot = new Bot(process.env.BOT_API_KEY);
 bot.catch((error) => {
   console.error("Виникла помилка в боті:", error);
 });
-
-// bot.use(hydrateContext());
-// bot.api.config.use(hydrateApi());
 
 bot.api
   .setMyCommands([
@@ -115,7 +111,8 @@ bot.callbackQuery("backToMainMenu", async (ctx) => {
   await ctx.answerCallbackQuery();
 });
 
-const ADMIN_TELEGRAM_ID = process.env.ADMIN_TELEGRAM_ID;
+const ADMIN_TELEGRAM_ID =
+  process.env.ADMIN_TELEGRAM_ID || process.env.ADMIN_TELEGRAM_ID;
 
 bot.use(async (ctx, next) => {
   ctx.isAdmin = ctx.from.id === Number(ADMIN_TELEGRAM_ID);
