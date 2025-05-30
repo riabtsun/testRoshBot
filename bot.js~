@@ -118,7 +118,7 @@ const ADMIN_TELEGRAM_ID = [
 ].map((id) => Number(id));
 
 bot.use(async (ctx, next) => {
-  ctx.isAdmin = ADMIN_TELEGRAM_IDS.includes(ctx.from.id);
+  ctx.isAdmin = ADMIN_TELEGRAM_IDS.includes(ctx.from.id)
   return next();
 });
 
