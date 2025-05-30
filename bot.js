@@ -115,6 +115,7 @@ const ADMIN_TELEGRAM_IDS = [
   process.env.ADMIN_TELEGRAM_ID,
   process.env.ADMIN2_TELEGRAM_ID,
   process.env.ADMIN3_TELEGRAM_ID,
+  process.env.ADMIN4_TELEGRAM_ID,
 ].map((id) => Number(id));
 
 bot.use(async (ctx, next) => {
