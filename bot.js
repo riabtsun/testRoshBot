@@ -111,7 +111,7 @@ bot.callbackQuery("backToMainMenu", async (ctx) => {
   await ctx.answerCallbackQuery();
 });
 
-const ADMIN_TELEGRAM_ID = [
+const ADMIN_TELEGRAM_IDS = [
   process.env.ADMIN_TELEGRAM_ID,
   process.env.ADMIN2_TELEGRAM_ID,
   process.env.ADMIN3_TELEGRAM_ID,
